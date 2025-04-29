@@ -18,7 +18,7 @@
                 <tr>
                     <th>#</th>
                     <th>Drug Name</th>
-                    <th>Summary (Markdown)</th>
+                    <th>Dosage recommendation</th>
                 </tr>
                 </thead>
                 <tbody>
