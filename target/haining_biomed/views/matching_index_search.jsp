@@ -1,4 +1,10 @@
-<%-- Created by IntelliJ IDEA. User: hello --%>
+<%--
+  Created by IntelliJ IDEA.
+  User: hello
+  Date: 2019-12-3
+  Time: 15:37
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isELIgnored="false" %>
@@ -10,7 +16,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Drug Dashboard</title>
+    <meta name="generator" content="">
+    <title>Dashboard Template · Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<%=request.getContextPath()%>/static/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -22,6 +29,9 @@
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
             user-select: none;
         }
 
@@ -35,62 +45,52 @@
 <body>
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Precision Medicine Matching System</a>
+
 </nav>
 
 <div class="container-fluid">
     <div class="row">
-        <jsp:include page="nav.jsp">
-            <jsp:param name="active" value="drugs" />
+        <jsp:include page="nav.jsp" >
+            <jsp:param name="active" value="matching_index" />
         </jsp:include>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h2>Drugs</h2>
+                <h2>Matching Result</h2>
             </div>
+            <div class="table-responsive">
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading">Sample Info #${sample.id}</h4>
+                    <div>Uploaded at: ${sample.createdAt}</div>
+                    <div>Uploaded by: ${sample.uploadedBy}</div>
 
-            <!-- Search box begin -->
-            <div class="row justify-content-center mb-3">
-                <div class="col-md-8">
-                    <form action="${pageContext.request.contextPath}/searchdrug" method="get" class="form-inline">
-                        <input type="text" class="form-control mr-2 flex-grow-1" name="name" placeholder="Enter drug name" required>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
                 </div>
             </div>
-            <!-- Search box close -->
-
             <div class="table-responsive">
-                <table class="table table-striped table-sm">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Drug URL</th>
-                        <th>Biomarker</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${drugs}" var="item">
+                <h4>Matched Drug Labels</h4>
+                <c:if test="${!matched.isEmpty()}">
+                    <table class="table table-striped table-sm">
+                        <thead>
                         <tr>
-                            <td>${item.id}</td>
-                            <td>${item.name}</td>
-                            <td>${item.drugUrl}</td>
-                            <td>${item.biomarker}</td>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Source</th>
+                            <th>Summary</th>
                         </tr>
-                    </c:forEach>
-
-                    <!-- After searching -->
-                    <c:if test="${not empty results}">
-                        <c:forEach items="${results}" var="result">
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${matched}" var="item" varStatus="loop">
                             <tr>
-                                <td>${result[0]}</td>
-                                <td>${result[1]}</td>
-                                <td colspan="2">${result[2]}</td>
+                                <td>${loop.index + 1}</td>
+                                <td>${item.name}</td>
+                                <td>${item.source}</td>
+                                <td>${item.summaryMarkdown}</td>
                             </tr>
                         </c:forEach>
-                    </c:if>
-                    </tbody>
-                </table>
+
+                        </tbody>
+                    </table>
+                </c:if>
             </div>
         </main>
     </div>
