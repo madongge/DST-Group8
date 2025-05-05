@@ -35,7 +35,7 @@ public class DrugLabelServlet extends HttpServlet {
 
                 if (conn.getResponseCode() != 200) {
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().write("{\"error\": \"PharmGKB接口访问失败\"}");
+                    response.getWriter().write("{\"error\": \"can't search PharmGKB API\"}");
                     return;
                 }
 
@@ -54,7 +54,7 @@ public class DrugLabelServlet extends HttpServlet {
 
                 if (dataMap == null || !dataMap.containsKey("relatedGenes")) {
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().write("{\"error\": \"Label数据中没有relatedGenes\"}");
+                    response.getWriter().write("{\"error\": \"no label information in relatedGenes\"}");
                     return;
                 }
 
