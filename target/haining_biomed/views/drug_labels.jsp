@@ -16,38 +16,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta name="generator" content="">
     <title>Dashboard Template · Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<%=request.getContextPath()%>/static/bootstrap/css/bootstrap.css" rel="stylesheet">
     <script src="<%=request.getContextPath()%>/static/jquery/jquery-3.4.1.js"></script>
     <script src="<%=request.getContextPath()%>/static/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom styles for this template -->
     <link href="<%=request.getContextPath()%>/static/css/app.css" rel="stylesheet">
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
 </head>
+
 <body>
-<jsp:include page="head.jsp" />
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Precision Medicine Matching System</a>
+</nav>
 
 <div class="container-fluid">
     <div class="row">
-        <jsp:include page="nav.jsp" >
+        <jsp:include page="nav.jsp">
             <jsp:param name="active" value="drug_labels" />
         </jsp:include>
 
@@ -55,6 +40,7 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h2>Drug Labels</h2>
             </div>
+
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
@@ -63,6 +49,7 @@
                         <th>Source</th>
                         <th>Dosing Information</th>
                         <th>Summary Markdown</th>
+                        <th>Gene Links</th> <!-- 新增 -->
                     </tr>
                     </thead>
                     <tbody>
@@ -71,15 +58,45 @@
                             <td>${item.id}</td>
                             <td>${item.source}</td>
                             <td>${item.dosingInformation}</td>
-                            <td>${item.summaryMarkdown}</td>
+                            <td>${item.summaryMarkdown.html}</td>
+                            <td>
+                                <c:forEach items="${item.relatedGenes}" var="gene">
+                                    <a href="javascript:void(0);" onclick="fetchGeneInfo('${item.id}', '${gene.id}')">
+                                            ${gene.symbol}
+                                    </a><br/>
+                                </c:forEach>
+                            </td>
                         </tr>
                     </c:forEach>
-
                     </tbody>
                 </table>
             </div>
         </main>
     </div>
 </div>
+
+<!-- 加JS，处理点击 -->
+<script>
+    function fetchGeneInfo(labelId, geneId) {
+        fetch('<%=request.getContextPath()%>/drugLabels?labelId=' + labelId + '&geneId=' + geneId)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert("错误信息: " + data.error);
+                } else {
+                    alert(
+                        "Gene Info:\n" +
+                        "Name: " + (data.name || "N/A") + "\n" +
+                        "Symbol: " + (data.symbol || "N/A") + "\n"
+                    );
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('无法获取基因信息，请稍后再试。');
+            });
+    }
+</script>
+
 </body>
 </html>
