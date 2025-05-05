@@ -18,7 +18,6 @@
     <meta name="author" content="">
     <title>Dashboard Template · Bootstrap</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="<%=request.getContextPath()%>/static/bootstrap/css/bootstrap.css" rel="stylesheet">
     <script src="<%=request.getContextPath()%>/static/jquery/jquery-3.4.1.js"></script>
     <script src="<%=request.getContextPath()%>/static/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -49,7 +48,7 @@
                         <th>Source</th>
                         <th>Dosing Information</th>
                         <th>Summary Markdown</th>
-                        <th>Gene Links</th> <!-- 新增 -->
+                        <th>Gene Links</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -75,14 +74,13 @@
     </div>
 </div>
 
-<!-- 加JS，处理点击 -->
 <script>
     function fetchGeneInfo(labelId, geneId) {
         fetch('<%=request.getContextPath()%>/drugLabels?labelId=' + labelId + '&geneId=' + geneId)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    alert("错误信息: " + data.error);
+                    alert("mistaken information: " + data.error);
                 } else {
                     alert(
                         "Gene Info:\n" +
@@ -93,7 +91,7 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('无法获取基因信息，请稍后再试。');
+                alert('please try later');
             });
     }
 </script>

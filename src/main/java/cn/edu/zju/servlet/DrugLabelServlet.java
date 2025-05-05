@@ -46,7 +46,7 @@ public class DrugLabelServlet extends HttpServlet {
 
                 if (labelInfo == null || !labelInfo.containsKey("data")) {
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().write("{\"error\": \"Label返回数据缺少data字段\"}");
+                    response.getWriter().write("{\"error\": \"Label lack of data\"}");
                     return;
                 }
 
@@ -70,7 +70,7 @@ public class DrugLabelServlet extends HttpServlet {
 
                 if (targetGene == null) {
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().write("{\"error\": \"找不到对应Gene\"}");
+                    response.getWriter().write("{\"error\": \"can't find Gene\"}");
                     return;
                 }
 
@@ -86,12 +86,11 @@ public class DrugLabelServlet extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
                 response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write("{\"error\": \"服务器异常\"}");
+                response.getWriter().write("{\"error\": \"server error\"}");
                 return;
             }
         }
 
-        // 正常加载drugLabels页面（从resources里面读）
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("drugLabels.data");
         if (inputStream == null) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "drugLabels.data not found");
