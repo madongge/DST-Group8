@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class DrugDao extends BaseDao {
 
     private static final Logger log = LoggerFactory.getLogger(DrugDao.class);
@@ -56,6 +57,33 @@ public class DrugDao extends BaseDao {
             }
         });
         return drugs;
+    }
+
+    public Drug findById(String drugId) {
+        Drug[] foundDrug = new Drug[1];
+        DBUtils.execSQL(connection -> {
+            try (PreparedStatement ps = connection.prepareStatement(
+                    "SELECT id, name, obj_cls, drug_url, biomarker FROM drug WHERE id = ?")) {
+
+                ps.setString(1, drugId);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    foundDrug[0] = new Drug(
+                            rs.getString("id"),
+                            rs.getString("name"),
+                            rs.getBoolean("biomarker"),
+                            rs.getString("drug_url"),
+                            rs.getString("obj_cls")
+                    );
+                }
+
+
+            } catch (SQLException e) {
+                log.error("Query failed for drugId: {}", drugId, e);
+            }
+        });
+        return foundDrug[0];
     }
 
 }

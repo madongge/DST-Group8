@@ -24,7 +24,7 @@
     <script src="<%=request.getContextPath()%>/static/jquery/jquery-3.4.1.js"></script>
     <script src="<%=request.getContextPath()%>/static/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Custom styles for this template -->
-    <link href="<%=request.getContextPath()%>/static/css/app.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -43,7 +43,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="head.jsp" />
+<%--<jsp:include page="head.jsp" />--%>
 
 <div class="container-fluid">
     <div class="row">
@@ -63,6 +63,7 @@
                         <th>Source</th>
                         <th>Dosing Information</th>
                         <th>Summary Markdown</th>
+                        <th>Gene Links</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -71,7 +72,14 @@
                             <td>${item.id}</td>
                             <td>${item.source}</td>
                             <td>${item.dosingInformation}</td>
-                            <td>${item.summaryMarkdown}</td>
+                            <td>${item.summaryMarkdown["html"]}</td>
+                            <td>
+                                <c:forEach items="${item.relatedGenes}" var="gene">
+                                    <a href="javascript:void(0);" onclick="fetchGeneInfo('${item.id}', '${gene.id}')">
+                                            ${gene.symbol}
+                                    </a><br/>
+                                </c:forEach>
+                            </td>
                         </tr>
                     </c:forEach>
 
@@ -81,5 +89,26 @@
         </main>
     </div>
 </div>
+<script>
+    function fetchGeneInfo(labelId, geneId) {
+        fetch('<%=request.getContextPath()%>/drugLabels?labelId=' + labelId + '&geneId=' + geneId)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert("mistaken information: " + data.error);
+                } else {
+                    alert(
+                        "Gene Info:\n" +
+                        "Name: " + (data.name || "N/A") + "\n" +
+                        "Symbol: " + (data.symbol || "N/A") + "\n"
+                    );
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('please try later');
+            });
+    }
+</script>
 </body>
 </html>

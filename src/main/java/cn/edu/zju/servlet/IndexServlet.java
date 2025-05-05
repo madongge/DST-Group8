@@ -1,6 +1,6 @@
 package cn.edu.zju.servlet;;
 
-import cn.edu.zju.filter.AuthenticationFilter;
+//import cn.edu.zju.filter.AuthenticationFilter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +21,7 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Enumeration<String> attributeNames = request.getSession().getAttributeNames();
         System.out.println("print session");
-        System.out.println(request.getSession().getAttribute(AuthenticationFilter.USERNAME));
+        //System.out.println(request.getSession().getAttribute(AuthenticationFilter.USERNAME));
         while (attributeNames.hasMoreElements()) {
             System.out.println(attributeNames.nextElement());
         }

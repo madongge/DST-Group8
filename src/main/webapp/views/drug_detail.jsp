@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: hello
-  Date: 2019-12-3
-  Time: 15:37
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <!doctype html>
@@ -15,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="generator" content="">
-    <title>Dashboard Template · Bootstrap</title>
+    <title>Drug Details</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<%=request.getContextPath()%>/static/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -41,8 +34,6 @@
     </style>
 </head>
 <body>
-<%--<jsp:include page="head.jsp" />--%>
-
 <div class="container-fluid">
     <div class="row">
         <jsp:include page="nav.jsp" >
@@ -51,13 +42,13 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h2>Dashboard</h2>
+                <h2>${drug.name}</h2>
             </div>
             <div class="table-responsive">
-                Welcome to use Improved Medicine Matching System.
-            </div>
-            <div class="alert alert-primary" role="alert">
-                Please go to help page to see how to use this system.
+                <p>ID: ${drug.id}</p>
+                <p>Classification: ${drug.objCls}</p>
+                <p>Biomarker: ${drug.biomarker ? 'Yes' : 'No'}</p>
+                <p>URL: <a href="https://www.pharmgkb.org/${drug.drugUrl}">${drug.drugUrl}</a></p>
             </div>
         </main>
     </div>

@@ -22,7 +22,7 @@
     <script src="<%=request.getContextPath()%>/static/jquery/jquery-3.4.1.js"></script>
     <script src="<%=request.getContextPath()%>/static/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Custom styles for this template -->
-    <link href="<%=request.getContextPath()%>/static/css/app.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -41,7 +41,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="head.jsp" />
+<%--<jsp:include page="head.jsp" />--%>
 
 <div class="container-fluid">
     <div class="row">
@@ -54,8 +54,10 @@
                 <h2>Dashboard</h2>
             </div>
             <div class="table-responsive">
-                Welcome to use Precision Medicine Matching System
-                <p>Visit Count: ${visitCount}</p>
+                Welcome to use Improved Medicine Matching System.
+            </div>
+            <div class="alert alert-primary" role="alert">
+                Please go to help page to see how to use this system.
             </div>
         </main>
     </div>
