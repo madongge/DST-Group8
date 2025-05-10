@@ -52,8 +52,11 @@
                 <h2>Help</h2>
             </div>
             <div class="table-responsive">
-                <p>Function1</p>
-                <p>Function2</p>
+                <p>In the navigation bar, you can search drug by entering drug ID</p>
+                <p>In the drug page, "Network Graph" has been added, which contains network diagrams of drugs and related genes. When you click on a gene, it will redirect you to a webpage with relevant information about the gene.</p>
+                <p>In the drug page, you can search drug by entering drug name</p>
+                <p>In the drug labels page, "Gene Links" has been added, which will display the related genes associated with each DrugLabel.</p>
+                <p>In the Dosing Guidline page, "Dose Adjustment Recommendations" has been added, which show the plot of dose adjustment</p>
             </div>
         </main>
     </div>
